@@ -3,535 +3,423 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizador de Puertas de Madera</title>
+    <title>Cotizador de Puertas</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background-color: #fafafa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: #fafafa;
+            color: #37352f;
             padding: 20px;
             line-height: 1.6;
         }
-        
+
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             background: white;
-            border: 1px solid #e5e5e5;
             padding: 40px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
-        
-        .header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #e5e5e5;
-        }
-        
-        .header h1 {
+
+        h1 {
             font-size: 28px;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-left: 10px;
+            margin-bottom: 30px;
+            color: #37352f;
         }
-        
+
         .form-group {
             margin-bottom: 24px;
         }
-        
+
         label {
             display: block;
             font-size: 14px;
             font-weight: 500;
-            color: #4a4a4a;
             margin-bottom: 8px;
+            color: #37352f;
         }
-        
-        input[type="number"],
-        select {
+
+        select, input[type="number"] {
             width: 100%;
-            padding: 10px 14px;
-            border: 1px solid #d4d4d4;
+            padding: 10px 12px;
             font-size: 15px;
-            color: #1a1a1a;
+            border: 1px solid #e0e0e0;
             background: white;
+            color: #37352f;
+            transition: border-color 0.2s;
         }
-        
-        input[type="number"]:focus,
-        select:focus {
+
+        select:focus, input[type="number"]:focus {
             outline: none;
-            border-color: #1a1a1a;
-            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+            border-color: #2383e2;
         }
-        
-        .input-group {
+
+        .dimensions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            gap: 16px;
         }
-        
-        .marco-input {
+
+        .marco-container {
             display: flex;
-            gap: 10px;
+            gap: 12px;
+            align-items: flex-end;
         }
-        
-        .marco-input input {
+
+        .marco-input {
             flex: 1;
         }
-        
-        .marco-input select {
+
+        .marco-unit {
             width: 120px;
         }
-        
-        .help-text {
-            font-size: 12px;
-            color: #737373;
-            margin-top: 6px;
-        }
-        
+
         .checkbox-group {
-            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 8px;
         }
-        
-        .checkbox-group input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            margin-right: 8px;
-            vertical-align: middle;
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .checkbox-group label {
-            display: inline;
-            font-weight: 500;
-            font-size: 14px;
-            vertical-align: middle;
-        }
-        
-        .btn-calculate {
-            width: 100%;
-            padding: 14px;
-            background: #1a1a1a;
-            color: white;
-            border: none;
-            font-size: 15px;
-            font-weight: 500;
+
+        .checkbox-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
             cursor: pointer;
-            margin-top: 10px;
-            transition: background 0.2s;
         }
-        
-        .btn-calculate:hover {
-            background: #333;
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: 400;
         }
-        
-        .result {
+
+        .quote-section {
             margin-top: 40px;
-            padding-top: 30px;
-            border-top: 1px solid #e5e5e5;
+            padding: 30px;
+            background: #f7f6f3;
+            border: 1px solid #e0e0e0;
         }
-        
-        .result-box {
-            background: #fafafa;
-            border: 1px solid #e5e5e5;
-            padding: 24px;
-        }
-        
-        .result h2 {
-            font-size: 20px;
+
+        .quote-title {
+            font-size: 18px;
             font-weight: 600;
-            color: #1a1a1a;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            color: #37352f;
         }
-        
-        .result-item {
+
+        .quote-item {
             display: flex;
             justify-content: space-between;
-            align-items: flex-start;
-            padding: 14px 0;
-            border-bottom: 1px solid #e5e5e5;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 15px;
         }
-        
-        .result-item:last-of-type {
+
+        .quote-item:last-child {
             border-bottom: none;
         }
-        
-        .result-label {
+
+        .quote-item .description {
             flex: 1;
+            color: #37352f;
         }
-        
-        .result-label strong {
-            display: block;
-            color: #1a1a1a;
+
+        .quote-item .price {
             font-weight: 500;
-            margin-bottom: 4px;
-        }
-        
-        .result-label small {
-            font-size: 13px;
-            color: #737373;
-        }
-        
-        .result-price {
-            font-weight: 500;
-            color: #1a1a1a;
-            margin-left: 20px;
+            color: #37352f;
             white-space: nowrap;
+            margin-left: 20px;
         }
-        
-        .result-total {
+
+        .quote-total {
+            margin-top: 20px;
             padding-top: 20px;
-            margin-top: 10px;
+            border-top: 2px solid #37352f;
             display: flex;
             justify-content: space-between;
-            align-items: center;
-        }
-        
-        .result-total span:first-child {
             font-size: 20px;
             font-weight: 600;
         }
-        
-        .result-total span:last-child {
-            font-size: 32px;
-            font-weight: 700;
-        }
-        
-        .notes {
-            margin-top: 24px;
-            background: white;
-            border: 1px solid #e5e5e5;
-            padding: 16px;
+
+        .note {
             font-size: 13px;
-            color: #737373;
+            color: #787774;
+            margin-top: 16px;
+            font-style: italic;
         }
-        
-        .notes p {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #4a4a4a;
-        }
-        
-        .notes ul {
-            list-style: disc;
-            padding-left: 20px;
-        }
-        
-        .notes li {
-            margin-bottom: 4px;
-        }
-        
-        .hidden {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
+
+        @media (max-width: 640px) {
             .container {
                 padding: 24px;
             }
-            
-            .input-group {
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .dimensions {
                 grid-template-columns: 1fr;
             }
-            
-            .header h1 {
-                font-size: 22px;
+
+            .marco-container {
+                flex-direction: column;
+                align-items: stretch;
             }
-            
-            .result-total span:last-child {
-                font-size: 26px;
+
+            .marco-unit {
+                width: 100%;
+            }
+
+            .quote-section {
+                padding: 20px;
+            }
+
+            .quote-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+
+            .quote-item .price {
+                margin-left: 0;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <line x1="9" y1="3" x2="9" y2="21"/>
-            </svg>
-            <h1>Cotizador de Puertas de Madera</h1>
-        </div>
+        <h1>Cotizador de Puertas de Madera</h1>
         
-        <form id="cotizadorForm">
-            <div class="form-group">
-                <label>Tipo de Madera</label>
-                <select id="madera">
-                    <option value="cedro">Cedro</option>
-                    <option value="tornillo">Tornillo</option>
-                    <option value="cachimbo">Cachimbo</option>
-                </select>
-            </div>
-            
-            <div class="input-group">
-                <div class="form-group">
-                    <label>Ancho (metros)</label>
-                    <input type="number" id="ancho" step="0.01" placeholder="1.00">
+        <div class="form-group">
+            <label>Tipo de Madera</label>
+            <select id="tipoMadera">
+                <option value="cedro">Cedro</option>
+                <option value="tornillo">Tornillo</option>
+                <option value="cachimbo">Cachimbo</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Medidas de la Puerta</label>
+            <div class="dimensions">
+                <div>
+                    <label style="font-weight: 400; font-size: 13px;">Ancho (metros)</label>
+                    <input type="number" id="ancho" step="0.01" min="0.01" value="1.00">
                 </div>
-                <div class="form-group">
-                    <label>Alto (metros)</label>
-                    <input type="number" id="alto" step="0.01" placeholder="2.40">
+                <div>
+                    <label style="font-weight: 400; font-size: 13px;">Alto (metros)</label>
+                    <input type="number" id="alto" step="0.01" min="0.01" value="2.40">
                 </div>
             </div>
-            
-            <div class="form-group">
-                <label>Grosor del Marco (opcional)</label>
+        </div>
+
+        <div class="form-group">
+            <label>Marco</label>
+            <div class="marco-container">
                 <div class="marco-input">
-                    <input type="number" id="marcoValor" step="0.1" placeholder="Por defecto: 4 pulgadas">
+                    <input type="number" id="marcoValor" step="0.01" min="4" value="4">
+                </div>
+                <div class="marco-unit">
                     <select id="marcoUnidad">
-                        <option value="cm">cm</option>
-                        <option value="pulgadas">pulgadas</option>
+                        <option value="pulgadas">Pulgadas</option>
+                        <option value="cm">Centímetros</option>
                     </select>
                 </div>
-                <div class="help-text">Marco estándar: 4" (incluido). Marco cajón: aprox. 12"</div>
             </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="incluirJamba">
-                    <label for="incluirJamba">Incluir Jamba (S/. 15 por metro)</label>
-                </div>
-                
-                <div id="jambaInput" class="hidden">
-                    <label>Ancho de Jamba (cm)</label>
-                    <input type="number" id="anchoJamba" step="0.1" value="7">
-                    <div class="help-text">Precio válido hasta 7 cm de ancho. Mayor ancho: consultar</div>
+        </div>
+
+        <div class="form-group">
+            <label>¿Requiere Jamba?</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
+                    <input type="checkbox" id="jamba">
+                    <label for="jamba">Sí, con jamba (hasta 7 cm de ancho)</label>
                 </div>
             </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
+        </div>
+
+        <div class="form-group">
+            <label>Opciones Adicionales</label>
+            <div class="checkbox-group">
+                <div class="checkbox-item">
                     <input type="checkbox" id="pintado">
                     <label for="pintado">Pintado (+S/. 150)</label>
                 </div>
-                
-                <div class="checkbox-group">
+                <div class="checkbox-item">
                     <input type="checkbox" id="instalado" checked>
-                    <label for="instalado">Instalado (-S/. 150 si no se incluye)</label>
+                    <label for="instalado">Instalado (incluido)</label>
                 </div>
-            </div>
-            
-            <button type="submit" class="btn-calculate">Calcular Cotización</button>
-        </form>
-        
-        <div id="resultado" class="result hidden">
-            <div class="result-box">
-                <h2>Cotización Detallada</h2>
-                <div id="resultadoContenido"></div>
-            </div>
-            
-            <div class="notes">
-                <p>Notas:</p>
-                <ul>
-                    <li>Medidas base: hasta 1.00 m × 2.40 m</li>
-                    <li>Marco estándar de 4" incluido en precio base</li>
-                    <li>Jamba redondeada al metro superior más cercano</li>
-                </ul>
             </div>
         </div>
+
+        <div class="quote-section">
+            <div class="quote-title">Cotización</div>
+            <div id="cotizacion"></div>
+        </div>
     </div>
-    
+
     <script>
-        const preciosBase = {
-            cedro: 3300,
-            tornillo: 2700,
-            cachimbo: 2600
-        };
-        
-        const preciosBasePintado = {
-            cedro: 3450,
-            tornillo: 2850,
-            cachimbo: 2750
-        };
-        
-        const preciosPorPulgada = {
-            cedro: 120,
-            tornillo: 100,
-            cachimbo: 80
-        };
-        
-        // Toggle jamba input
-        document.getElementById('incluirJamba').addEventListener('change', function(e) {
-            document.getElementById('jambaInput').classList.toggle('hidden', !e.target.checked);
-        });
-        
-        // Form submit
-        document.getElementById('cotizadorForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            calcularPrecio();
-        });
-        
-        function calcularPrecio() {
-            const ancho = parseFloat(document.getElementById('ancho').value);
-            const alto = parseFloat(document.getElementById('alto').value);
-            const madera = document.getElementById('madera').value;
-            const marcoValor = document.getElementById('marcoValor').value;
+        function calcularCotizacion() {
+            const tipoMadera = document.getElementById('tipoMadera').value;
+            const ancho = parseFloat(document.getElementById('ancho').value) || 0;
+            const alto = parseFloat(document.getElementById('alto').value) || 0;
+            let marcoValor = parseFloat(document.getElementById('marcoValor').value) || 4;
             const marcoUnidad = document.getElementById('marcoUnidad').value;
-            const incluirJamba = document.getElementById('incluirJamba').checked;
-            const anchoJamba = parseFloat(document.getElementById('anchoJamba').value);
+            const conJamba = document.getElementById('jamba').checked;
             const pintado = document.getElementById('pintado').checked;
             const instalado = document.getElementById('instalado').checked;
-            
-            if (!ancho || !alto || ancho <= 0 || alto <= 0) {
-                alert('Por favor ingresa medidas válidas');
-                return;
+
+            // Convertir marco a pulgadas si está en cm
+            if (marcoUnidad === 'cm') {
+                marcoValor = marcoValor / 2.54;
             }
-            
-            // Calcular marco en cm
-            let marcoCm;
-            if (marcoValor) {
-                marcoCm = marcoUnidad === 'cm' ? parseFloat(marcoValor) : parseFloat(marcoValor) * 2.54;
-            } else {
-                marcoCm = 10.16; // 4 pulgadas
+
+            // Redondear marco hacia arriba
+            marcoValor = Math.ceil(marcoValor);
+
+            // Precios base
+            let preciosBase = {
+                cedro: 3300,
+                tornillo: 2700,
+                cachimbo: 2600
+            };
+
+            // Si es pintado, sumar 150 al precio base
+            if (pintado) {
+                preciosBase.cedro = 3500;
+                preciosBase.tornillo = 2900;
+                preciosBase.cachimbo = 2800;
             }
-            
-            // Precio base con o sin pintado
-            const precioBase = pintado ? preciosBasePintado[madera] : preciosBase[madera];
-            
-            // Calcular precio de puerta
-            const anchoCalculo = ancho <= 1 ? 1 : ancho;
-            const altoCalculo = alto <= 2.40 ? 2.40 : alto;
-            
-            let precioPuerta;
-            if (ancho <= 1 && alto <= 2.40) {
-                precioPuerta = precioBase;
-            } else {
-                const factorAltura = altoCalculo / 2.40;
-                const precioConAltura = precioBase * factorAltura;
-                precioPuerta = precioConAltura * anchoCalculo;
+
+            let precioBase = preciosBase[tipoMadera];
+
+            // Calcular precio de la puerta
+            let anchoCalculo = ancho <= 1.00 ? 1 : ancho;
+            let altoCalculo = alto <= 2.40 ? 2.40 : alto;
+
+            let precioPuerta = (precioBase / 2.40) * altoCalculo * anchoCalculo;
+
+            // Calcular adicional por marco
+            const precioPorPulgada = {
+                cedro: 120,
+                tornillo: 100,
+                cachimbo: 80
+            };
+
+            let adicionalMarco = 0;
+            if (marcoValor > 4) {
+                adicionalMarco = (marcoValor - 4) * precioPorPulgada[tipoMadera];
             }
-            
-            // Calcular marco adicional
-            const marcoPulgadas = marcoCm / 2.54;
-            const marcoPulgadasRedondeado = Math.ceil(marcoPulgadas);
-            const pulgadasAdicionales = Math.max(0, marcoPulgadasRedondeado - 4);
-            const costoAdicionalMarco = pulgadasAdicionales * preciosPorPulgada[madera];
-            
+
             // Calcular jamba
-            let costoJamba = 0;
-            let metrosJamba = 0;
-            let jambaConsultar = false;
-            
-            if (incluirJamba) {
-                if (anchoJamba > 7) {
-                    jambaConsultar = true;
-                } else {
-                    metrosJamba = alto + ancho + alto;
-                    metrosJamba = Math.ceil(metrosJamba);
-                    costoJamba = metrosJamba * 15;
-                }
+            let precioJamba = 0;
+            let jambaTexto = '';
+            if (conJamba) {
+                const perimetro = alto + ancho + alto;
+                const metrosJamba = Math.ceil(perimetro);
+                precioJamba = metrosJamba * 15;
+                jambaTexto = `Jamba de 7 cm (${metrosJamba} m)`;
             }
-            
-            // Calcular total
-            const precioTotal = precioPuerta + costoAdicionalMarco + costoJamba;
-            const descuentoInstalacion = instalado ? 0 : 150;
-            const precioFinal = precioTotal - descuentoInstalacion;
-            
-            // Mostrar resultado
-            mostrarResultado({
-                puerta: precioPuerta,
-                marco: costoAdicionalMarco,
-                marcoPulgadas: marcoPulgadasRedondeado,
-                marcoCm: marcoCm,
-                jamba: costoJamba,
-                metrosJamba: metrosJamba,
-                jambaConsultar: jambaConsultar,
-                descuentoInstalacion: descuentoInstalacion,
-                total: precioFinal,
-                tipoMadera: madera,
-                ancho: ancho,
-                alto: alto,
-                pintado: pintado,
-                instalado: instalado,
-                incluirJamba: incluirJamba,
-                anchoJamba: anchoJamba
-            });
-        }
-        
-        function mostrarResultado(datos) {
-            const resultado = document.getElementById('resultado');
-            const contenido = document.getElementById('resultadoContenido');
-            
-            let html = '';
-            
-            // Puerta
-            html += `
-                <div class="result-item">
-                    <div class="result-label">
-                        <strong>Puerta de madera ${datos.tipoMadera} (${datos.ancho} m × ${datos.alto} m)${datos.pintado ? ' pintada' : ''}${datos.instalado ? ' instalada' : ''}</strong>
-                    </div>
-                    <div class="result-price">S/. ${datos.puerta.toFixed(2)}</div>
-                </div>
-            `;
-            
-            // Marco
-            html += `
-                <div class="result-item">
-                    <div class="result-label">
-                        <strong>Marco de ${datos.marcoPulgadas}" (${datos.marcoCm.toFixed(1)} cm)</strong>
-                        <small>${datos.marco === 0 ? 'Marco estándar' : `${datos.marcoPulgadas - 4} pulgadas adicionales × S/. ${preciosPorPulgada[datos.tipoMadera]}`}</small>
-                    </div>
-                    <div class="result-price">${datos.marco === 0 ? 'Incluido' : 'S/. ' + datos.marco.toFixed(2)}</div>
-                </div>
-            `;
-            
-            // Jamba
-            if (datos.incluirJamba && !datos.jambaConsultar && datos.jamba > 0) {
-                html += `
-                    <div class="result-item">
-                        <div class="result-label">
-                            <strong>Jamba de ${datos.anchoJamba} cm de ancho</strong>
-                            <small>${datos.metrosJamba} metros × S/. 15</small>
-                        </div>
-                        <div class="result-price">S/. ${datos.jamba.toFixed(2)}</div>
-                    </div>
-                `;
-            }
-            
-            if (datos.incluirJamba && datos.jambaConsultar) {
-                html += `
-                    <div class="result-item">
-                        <div class="result-label">
-                            <strong>Jamba de ${datos.anchoJamba} cm de ancho</strong>
-                            <small>Ancho mayor a 7 cm</small>
-                        </div>
-                        <div class="result-price" style="font-style: italic;">CONSULTAR</div>
-                    </div>
-                `;
-            }
-            
-            // Sin instalación
-            if (!datos.instalado) {
-                html += `
-                    <div class="result-item">
-                        <div class="result-label">
-                            <strong>Sin instalación</strong>
-                        </div>
-                        <div class="result-price">- S/. 150.00</div>
-                    </div>
-                `;
-            }
-            
+
             // Total
-            html += `
-                <div class="result-total">
-                    <span>TOTAL</span>
-                    <span>${datos.jambaConsultar ? 'CONSULTAR' : 'S/. ' + datos.total.toFixed(2)}</span>
+            let total = precioPuerta + adicionalMarco + precioJamba;
+
+            // Si no es instalado, restar 150 del total
+            if (!instalado) {
+                total -= 150;
+            }
+
+            // Generar cotización
+            let cotizacionHTML = '';
+
+            // Nombre de la madera
+            const nombresMadera = {
+                cedro: 'Cedro',
+                tornillo: 'Tornillo',
+                cachimbo: 'Cachimbo'
+            };
+
+            const textoInstalada = instalado ? ' e instalada' : '';
+            const textoPintado = pintado ? ' pintada' : '';
+
+            // Ajustar precio de puerta si no es instalado
+            let precioPuertaMostrar = precioPuerta;
+            if (!instalado) {
+                precioPuertaMostrar -= 150;
+            }
+
+            cotizacionHTML += `
+                <div class="quote-item">
+                    <div class="description">Puerta de madera ${nombresMadera[tipoMadera]}${textoPintado} (${ancho.toFixed(2)} m × ${alto.toFixed(2)} m)${textoInstalada}</div>
+                    <div class="price">S/. ${precioPuertaMostrar.toFixed(2)}</div>
                 </div>
             `;
-            
-            contenido.innerHTML = html;
-            resultado.classList.remove('hidden');
-            
-            // Scroll al resultado
-            resultado.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+            // Marco
+            if (marcoValor <= 4) {
+                cotizacionHTML += `
+                    <div class="quote-item">
+                        <div class="description">Marco estándar de 4"</div>
+                        <div class="price">Incluido</div>
+                    </div>
+                `;
+            } else {
+                cotizacionHTML += `
+                    <div class="quote-item">
+                        <div class="description">Marco de ${marcoValor}"</div>
+                        <div class="price">S/. ${adicionalMarco.toFixed(2)}</div>
+                    </div>
+                `;
+            }
+
+            // Jamba
+            if (conJamba) {
+                cotizacionHTML += `
+                    <div class="quote-item">
+                        <div class="description">${jambaTexto}</div>
+                        <div class="price">S/. ${precioJamba.toFixed(2)}</div>
+                    </div>
+                `;
+            }
+
+            cotizacionHTML += `
+                <div class="quote-total">
+                    <div>TOTAL</div>
+                    <div>S/. ${total.toFixed(2)}</div>
+                </div>
+            `;
+
+            if (conJamba) {
+                cotizacionHTML += `<div class="note">* Precio de jamba válido hasta 7 cm de ancho. Para anchos mayores, consultar.</div>`;
+            }
+
+            document.getElementById('cotizacion').innerHTML = cotizacionHTML;
         }
+
+        // Event listeners
+        document.getElementById('tipoMadera').addEventListener('change', calcularCotizacion);
+        document.getElementById('ancho').addEventListener('input', calcularCotizacion);
+        document.getElementById('alto').addEventListener('input', calcularCotizacion);
+        document.getElementById('marcoValor').addEventListener('input', calcularCotizacion);
+        document.getElementById('marcoUnidad').addEventListener('change', calcularCotizacion);
+        document.getElementById('jamba').addEventListener('change', calcularCotizacion);
+        document.getElementById('pintado').addEventListener('change', calcularCotizacion);
+        document.getElementById('instalado').addEventListener('change', calcularCotizacion);
+
+        // Calcular al cargar
+        calcularCotizacion();
     </script>
 </body>
 </html>
